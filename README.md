@@ -1,4 +1,4 @@
-# Easy Magento 1 CSP Enforcement
+# Easy Magento 1 Content Security Policy (CSP) Enforcement
 
 1. Go to https://report-uri.com/register and register for a free account.
 2. Go to CSP->Wizard.
