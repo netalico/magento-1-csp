@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Netalico_Csp>
+            <version>0.1.0</version>
+        </Netalico_Csp>
+    </modules>
+    <global>
+        <helpers>
+            <netalico_csp>
+                <class>Netalico_Csp_Helper</class>
+            </netalico_csp>
+        </helpers>
+        <models>
+            <netalico_csp>
+                <class>Netalico_Csp_Model</class>
+            </netalico_csp>
+        </models>
+        <events>
+            <controller_action_predispatch>
+                <observers>
+                    <netalico_csp_observer>
+                        <class>netalico_csp/observer</class>
+                        <method>enforce</method>
+                    </netalico_csp_observer>
+                </observers>
+            </controller_action_predispatch>
+        </events>
+    </global>
+</config>
