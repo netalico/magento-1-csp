@@ -8,21 +8,21 @@ Class Netalico_Csp_Model_Observer extends Varien_Event_Observer
 		if (!$helper->isEnabled()) {
 			return;
 		}
-		
+
 		$controllerAction = $observer->getEvent()->getControllerAction();
      	$response = $controllerAction->getResponse();
-     	
+
      	$policy = $helper->getPolicy();
-     	$reportUri = $helper->getReportUri();
-     	
+     	$reportUri = 'https://' . $helper->getReportUri() . '.report-uri.com/r/d/csp/'; ;
+
      	if ($helper->getCheckoutLockdown()) {
 	 		if (strpos(Mage::app()->getStore()->getCurrentUrl(), $helper->getCheckoutUrl()) !== false) {
 		 		$response->setHeader("Content-Security-Policy", $policy . "; report-uri " . $reportUri . 'enforce');
 		 		return;
 			}
-	     	
+
      	}
-		
+
 		switch ($helper->getMode()) {
 			case "0": // Wizard
 				$response->setHeader("Content-Security-Policy-Report-Only", $policy . "; report-uri " . $reportUri . 'wizard');
@@ -35,10 +35,10 @@ Class Netalico_Csp_Model_Observer extends Varien_Event_Observer
 				break;
 			case "3": // Disabled
 				break;
-				
+
 		}
-	    
-	
+
+
     }
 }
 

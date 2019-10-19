@@ -36,7 +36,7 @@
                             <show_in_store>0</show_in_store>
                         </policy>
                         <report_uri>
-                            <label>Report URI</label>
+                            <label>Report URI Subdomain</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>3</sort_order>
                             <show_in_default>1</show_in_default>
@@ -70,7 +70,7 @@
                             <show_in_store>0</show_in_store>
                         </checkout_url>
                     </fields>
-                    
+
                 </config>
             </groups>
         </csp>
