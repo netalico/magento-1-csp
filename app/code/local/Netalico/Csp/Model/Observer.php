@@ -34,13 +34,16 @@ Class Netalico_Csp_Model_Observer extends Varien_Event_Observer
 	    
 	    switch ($helper->getMode()) {
 			case "0": // Wizard
-				$response->setHeader("Content-Security-Policy-Report-Only", $helper->getPolicy() . "; report-uri " . $helper->getReportUri() . 'wizard');
+				$response->setHeader("Content-Security-Policy-Report-Only", $helper->getPolicy() . $helper->getReportUri()) . 'wizard';
 				break;
 			case "1": // Reporting
-				$response->setHeader("Content-Security-Policy-Report-Only", $helper->getPolicy() . "; report-uri " . $helper->getReportUri() . 'reportOnly');
+				$response->setHeader("Content-Security-Policy-Report-Only", $helper->getPolicy() . $helper->getReportUri() . 'reporting');
 				break;
 			case "2": // Enforce
-				$response->setHeader("Content-Security-Policy", $helper->getPolicy() . "; report-uri " . $helper->getReportUri() . 'enforce');
+				$response->setHeader("Content-Security-Policy", $helper->getPolicy() . $helper->getReportUri() . 'enforce');
+				break;
+			case "3": // No Reporting
+				$response->setHeader("Content-Security-Policy", $helper->getPolicy());
 				break;
 
 		}

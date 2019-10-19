@@ -22,7 +22,7 @@ class Netalico_Csp_Helper_Data extends Mage_Core_Helper_Abstract
     
     public function getReportUri()
     {
-	    return 'https://' . Mage::getStoreConfig('csp/config/report_uri') . '.report-uri.com/r/d/csp/'; ;
+	    return "; report-uri " . 'https://' . Mage::getStoreConfig('csp/config/report_uri') . '.report-uri.com/r/d/csp/';
     }
     
     public function getMode()
