@@ -13,6 +13,9 @@ Class Netalico_Csp_Model_Observer extends Varien_Event_Observer
      	$response = $controllerAction->getResponse();
 
      	$policy = $helper->getPolicy();
+      if (!$policy) {
+        $policy = $helper->getDefaultPolicy();
+      }
      	$reportUri = 'https://' . $helper->getReportUri() . '.report-uri.com/r/d/csp/'; ;
 
      	if ($helper->getCheckoutLockdown()) {
