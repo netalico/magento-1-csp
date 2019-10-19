@@ -1,7 +1,7 @@
 <?php
 Class Netalico_Csp_Model_Observer extends Varien_Event_Observer
 {
-    public function enforce(Varien_Event_Observer $observer)
+    public function enforce(Varien_Event_Observer $observer) 
     {
 	    $helper = Mage::helper('netalico_csp');
 
@@ -13,35 +13,37 @@ Class Netalico_Csp_Model_Observer extends Varien_Event_Observer
      	$response = $controllerAction->getResponse();
 
      	$policy = $helper->getPolicy();
-      if (!$policy) {
-        $policy = $helper->getDefaultPolicy();
-      }
-     	$reportUri = 'https://' . $helper->getReportUri() . '.report-uri.com/r/d/csp/'; ;
+      	
+     	$reportUri = $helper->getReportUri();
 
-     	if ($helper->getCheckoutLockdown()) {
-	 		if (strpos(Mage::app()->getStore()->getCurrentUrl(), $helper->getCheckoutUrl()) !== false) {
-		 		$response->setHeader("Content-Security-Policy", $policy . "; report-uri " . $reportUri . 'enforce');
+     	if (!$helper->getOnlyCheckout()) {
+	 		$this->_enforcePolicy($response, $mode);
+	 		return;
+     	} else {
+	     	if (strpos(Mage::app()->getStore()->getCurrentUrl(), $helper->getCheckoutUrl()) !== false) {
+		 		$this->_enforcePolicy($response, $mode);
 		 		return;
 			}
-
      	}
 
-		switch ($helper->getMode()) {
+    }
+    
+    private function _enforcePolicy($response, $mode) 
+    {
+	    $helper = Mage::helper('netalico_csp');
+	    
+	    switch ($helper->getMode()) {
 			case "0": // Wizard
-				$response->setHeader("Content-Security-Policy-Report-Only", $policy . "; report-uri " . $reportUri . 'wizard');
+				$response->setHeader("Content-Security-Policy-Report-Only", $helper->getPolicy() . "; report-uri " . $helper->getReportUri() . 'wizard');
 				break;
 			case "1": // Reporting
-				$response->setHeader("Content-Security-Policy-Report-Only", $policy . "; report-uri " . $reportUri . 'reportOnly');
+				$response->setHeader("Content-Security-Policy-Report-Only", $helper->getPolicy() . "; report-uri " . $helper->getReportUri() . 'reportOnly');
 				break;
 			case "2": // Enforce
-				$response->setHeader("Content-Security-Policy", $policy . "; report-uri " . $reportUri . 'enforce');
-				break;
-			case "3": // Disabled
+				$response->setHeader("Content-Security-Policy", $helper->getPolicy() . "; report-uri " . $helper->getReportUri() . 'enforce');
 				break;
 
 		}
-
-
     }
 }
 
